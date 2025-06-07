@@ -44,8 +44,8 @@ sudo apt-get update
 ```
 ### Step 3. Clone The Repo 
 ```bash
- git clone --
-cd 
+ git clone https://github.com/SaimShaikh/internetspeedtracker.git
+cd Whether_app
 ```
 ### Step 2. Make a  Dockerfile inside the project
 ```bash
