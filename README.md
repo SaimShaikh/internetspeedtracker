@@ -47,11 +47,11 @@ sudo apt-get update
  git clone https://github.com/SaimShaikh/internetspeedtracker.git
 cd Whether_app
 ```
-### Step 2. Make a  Dockerfile inside the project
+### Step 4. Make a  Dockerfile inside the project
 ```bash
 vim Dockerfile
 ```
-### Step 3. Paste this inside the Dockerfile
+### Step 5. Paste this inside the Dockerfile
 ```bash
 # Use official Python image
 FROM python:3.9-slim
@@ -78,21 +78,21 @@ EXPOSE 5000
 CMD ["python", "app.py"]
 
 ```
-### Step 4. Build the Dockerimage
+### Step 6. Build the Dockerimage
 ```bash
 docker build -t <Any Name you want >
 ```
-### Step 5. Run the Project
+### Step 7. Run the Project
 ```bash
 docker run -d -p 5000:5000 <app name>
 ```
-### Step 6. Now Go to Security Groups allow port Number 5000
+### Step 8. Now Go to Security Groups allow port Number 5000
 Images 
 <img width="1665" alt="red" src="https://github.com/user-attachments/assets/4276339a-9d41-4d6b-a089-c4dc5a2592f3" />
 
 
 
-### Step 7. Now Copy the Public Ip address of Your AWS EC2 Instance and add 5000 at the end of Address 
+### Step 9. Now Copy the Public Ip address of Your AWS EC2 Instance and add 5000 at the end of Address 
 Images 
 <img width="1669" alt="ip " src="https://github.com/user-attachments/assets/976eabcc-97b9-459f-97a3-4ba41c2a0324" />
 
