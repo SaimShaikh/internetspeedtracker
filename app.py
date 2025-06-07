@@ -11,16 +11,17 @@ def index():
 def test_speed():
     try:
         st = speedtest.Speedtest()
-        print("Testing internet speed...")
-        download_speed = st.download() / 1000000  # Convert to Mbps
-        upload_speed = st.upload() / 1000000  # Convert to Mbps
-        ping = st.results.dict()['ping']
-        server = st.results.dict()['server']['name']
-        isp = st.results.dict()['client']['isp']
+        st.get_best_server()  # Choose the best server based on ping
+        download_speed = st.download() / 1_000_000  # Convert to Mbps
+        upload_speed = st.upload() / 1_000_000  # Convert to Mbps
+        ping = st.results.ping
+        server = st.results.server['name']
+        isp = st.results.client['isp']
+
         return jsonify({
             'download_speed': f"{download_speed:.2f} Mbps",
             'upload_speed': f"{upload_speed:.2f} Mbps",
-            'ping': f"{ping} ms",
+            'ping': f"{ping:.0f} ms",
             'server': server,
             'isp': isp
         })
@@ -28,4 +29,4 @@ def test_speed():
         return jsonify({'error': str(e)})
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)

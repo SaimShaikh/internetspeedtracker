@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Internet Speed Test</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #121212;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .card {
+            background: #1f1f1f;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            width: 380px;
+        }
+
+        h1 {
+            margin-bottom: 1.5rem;
+        }
+
+        button {
+            padding: 12px 25px;
+            background: #00c896;
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #00b285;
+        }
+
+        .results {
+            margin-top: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .spinner {
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #00c896;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 1rem auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Speed Test</h1>
+        <button onclick="runSpeedTest()">Run Test</button>
+        <div id="loading" class="spinner" style="display: none;"></div>
+        <div id="results" class="results"></div>
+    </div>
+
+    <script>
+        async function runSpeedTest() {
+            const loading = document.getElementById("loading");
+            const results = document.getElementById("results");
+
+            results.innerHTML = '';
+            loading.style.display = 'block';
+
+            try {
+                const response = await fetch('/test_speed');
+                const data = await response.json();
+                loading.style.display = 'none';
+
+                if (data.error) {
+                    results.innerHTML = `<p style="color: #ff5c5c;">Error: ${data.error}</p>`;
+                } else {
+                    results.innerHTML = `
+                        <p><strong>Download Speed:</strong> ${data.download_speed}</p>
+                        <p><strong>Upload Speed:</strong> ${data.upload_speed}</p>
+                        <p><strong>Ping:</strong> ${data.ping}</p>
+                        <p><strong>Server:</strong> ${data.server}</p>
+                        <p><strong>ISP:</strong> ${data.isp}</p>
+                    `;
+                }
+            } catch (err) {
+                loading.style.display = 'none';
+                results.innerHTML = `<p style="color: #ff5c5c;">Something went wrong.</p>`;
+            }
+        }
+    </script>
+</body>
+</html>
